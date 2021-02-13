@@ -18,8 +18,6 @@ BM_NO_CACHE_STRING	|	6912
 BM_NO_CACHE_ALL		|	7168
 */
 
-#define BM_NO_CACHE_ALL
-
 #ifdef BM_NO_CACHE_ALL
 #ifndef BM_NO_CACHE_REVERSE
 #define BM_NO_CACHE_REVERSE
@@ -38,8 +36,6 @@ BM_NO_CACHE_ALL		|	7168
 #define BM_NO_CACHE_WCHAR
 #endif
 #endif // BM_NO_CACHE_STRING
-
-
 
 /* a=bit position of mask*/
 #define BIT_MASK(a)		(1ULL<<(a))
@@ -81,9 +77,9 @@ BM_NO_CACHE_ALL		|	7168
 extern "C" {
 #endif
 
-	const char* BIT_STRING(uint8_t d);
-	const wchar_t* BIT_WSTRING(uint8_t d);
-	uint8_t BIT_REVERSE(uint8_t d);
+	const char* bitString(uint8_t d);
+	const wchar_t* bitStringW(uint8_t d);
+	uint8_t bitReverse(uint8_t d);
 
 #ifdef __cplusplus
 }
