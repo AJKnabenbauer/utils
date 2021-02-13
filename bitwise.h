@@ -7,7 +7,8 @@ This header file provides simple macros and functions for general bitwise and bi
 style manipulation.
 
 Define the following BM_NO_CACHE_ flags to compute byte strings and reversal instead
-of using an array of look up values.
+of using an array of look up values. If an array of values is used, it is a static const array
+so that memory from the data segment is used, and not the stack.
 
 #define				|	bytes
 ------------------------------
@@ -37,10 +38,14 @@ BM_NO_CACHE_ALL		|	7168
 #endif
 #endif // BM_NO_CACHE_STRING
 
-/* a=bit position of mask*/
+/*Create a bit mask for a given bit position*/
 #define BIT_MASK(a)		(1ULL<<(a))
 
-/*a=leftmost bit set in range, b=rightmost bit set in range*/
+/*
+* Create a bit mask for a given bit range, 
+* a - msb bit position 
+* b - lsb bit position
+*/
 #define BIT_RANGE(a,b)	(((~0ULL)<<((a)+1)) ^ ((~0ULL)<<(b)))
 
 /* a=target variable, b=bit number to act upon 0-n */
