@@ -1,9 +1,9 @@
-#include <stdio.h>
-
 #pragma once
 
-#define CONSOLE_FNAME_OUTPUT "CONOUT$"
-#define CONSOLE_FNAME_INPUT "CONIN$"
+#include <stdio.h>
+
+#define CNSL_FNAME_OUTPUT "CONOUT$"
+#define CNSL_FNAME_INPUT "CONIN$"
 
 #define CNSL_COLOR_FRG_BLACK	  "\x1b[30m"
 #define CNSL_COLOR_FRG_RED		  "\x1b[31m"
@@ -23,6 +23,7 @@
 #define CNSL_COLOR_FRG_MAGENTA_B  "\x1b[95m"
 #define CNSL_COLOR_FRG_CYAN_B	  "\x1b[96m"
 #define CNSL_COLOR_FRG_WHITE_B	  "\x1b[97m"
+
 #define CNSL_COLOR_BKG_BLACK	  "\x1b[40m"
 #define CNSL_COLOR_BKG_RED		  "\x1b[41m"
 #define CNSL_COLOR_BKG_GREEN	  "\x1b[42m"
@@ -41,6 +42,7 @@
 #define CNSL_COLOR_BKG_MAGENTA_B  "\x1b[105m"
 #define CNSL_COLOR_BKG_CYAN_B	  "\x1b[106m"
 #define CNSL_COLOR_BKG_WHITE_B	  "\x1b[107m"
+
 #define CNSL_TFORMAT_DEFAULT	  "\x1b[0m"
 #define CNSL_TFORMAT_BOLD_EN	  "\x1b[1m"
 #define CNSL_TFORMAT_BOLD_DIS	  "\x1b[22m"
@@ -48,11 +50,19 @@
 #define CNSL_TFORMAT_ULINE_DIS	  "\x1b[24m"
 #define CNSL_TFORMAT_NEGATIVE_EN  "\x1b[7m"
 #define CNSL_TFORMAT_NEGATIVE_DIS "\x1b[27m"
+
 #define CNSL_CLEAR_DISPLAY		  "\x1b[2J"
 #define CNSL_CLEAR_SCROLLB		  "\x1b[3J"
 #define CNSL_CLEAR_ALL			  "\x1B[2J\x1B[3J"
 
-namespace cnsl {
+class Console
+{
+	static void* m_hStdout;
+	static void* m_hStdin;
+	static void* m_hStderr;
+	static char m_VTSeqBuf[128];
+
+public:
 
 	enum class Color {
 		BLACK		   = 30,
@@ -75,40 +85,41 @@ namespace cnsl {
 		BRIGHT_WHITE   = 97
 	};
 
-	unsigned long Create();
+	static unsigned long Allocate();
+	static int Free();
 
-	int Free();
+	static int ReopenFileAsOutput(FILE* pFile);
+	static int ReopenFileAsInput(FILE* pFile);
+	static int RedirectStdIO(bool stdIn = true, bool stdOut = true, bool stdErr = true);
 
-	int ReopenFileAsOutput(FILE* pFile);
-	int ReopenFileAsInput(FILE* pFile);
+	static unsigned long SetVTProcessingEn(bool enabled);
+	static unsigned long OutputVTSequence(const char* sPrefix, int iVal, const char* sSuffix);
+	static unsigned long OutputVTSequence(const char* sPrefix, const char* sVal, const char* sSuffix);
+	static unsigned long OutputVTSequence(const char* sSeq);
+
+	static char* MakeVTSeq(const char* sA, int iB, const char* sC);
+	static char* MakeVTSeq(const char* sA, const char* sB, const char* sC);
+	static char* MakeVTSeq(const char* sA, const char* sB);
+	static char* MakeVTSeq(const char* sA);
+
+	static unsigned long SetTxtColorBkg(Color color) { return OutputVTSequence("[", (int)color + 10, "m"); }
+	static unsigned long SetTxtColorFrg(Color color) { return OutputVTSequence("[", (int)color, "m"); }
+	static unsigned long SetTxtColors(Color colorFG, Color colorBG);
+
+	static char* GetColorVTSeqBkg(Color color) { return MakeVTSeq("[", (int)color + 10, "m"); }
+	static char* GetColorVTSeqFrg(Color color) { return MakeVTSeq("[", (int)color, "m"); }
+	static char* GetColorVTSeq(Color colorFG, Color colorBG);
+
+	static unsigned long SetTxtBoldEn(bool enabled) { return OutputVTSequence(enabled ? CNSL_TFORMAT_BOLD_EN : CNSL_TFORMAT_BOLD_DIS); }
 	
-	unsigned long SetVTProcessingEn(bool enabled);
+	static unsigned long SetTxtUnderlineEn(bool enabled) { return OutputVTSequence(enabled ? CNSL_TFORMAT_ULINE_EN : CNSL_TFORMAT_ULINE_DIS); }
 	
-	unsigned long OutputVTSequence(const char* sPrefix, int iVal, const char* sSuffix);
-	unsigned long OutputVTSequence(const char* sPrefix, const char* sVal, const char* sSuffix);	
-	unsigned long OutputVTSequence(const char* sSeq);
-
-	char* MakeVTSeq(const char* sA, int iB, const char* sC);
-	char* MakeVTSeq(const char* sA, const char* sB, const char* sC);
-	char* MakeVTSeq(const char* sA, const char* sB);
-	char* MakeVTSeq(const char* sA);
-
-	inline unsigned long SetTxtColorBkg(Color color) { return OutputVTSequence("[", (int)color + 10, "m"); }
-	inline unsigned long SetTxtColorFrg(Color color) { return OutputVTSequence("[", (int)color, "m"); }
-	unsigned long SetTxtColors(Color colorFG, Color colorBG);
-
-	inline char* GetColorVTSeqBkg(Color color) { return MakeVTSeq("[", (int)color + 10, "m"); }
-	inline char* GetColorVTSeqFrg(Color color) { return MakeVTSeq("[", (int)color, "m"); }
-	char* GetColorVTSeq(Color colorFG, Color colorBG);	
-
-	inline unsigned long SetTxtBoldEn(bool enabled) { return OutputVTSequence(enabled ? CNSL_TFORMAT_BOLD_EN : CNSL_TFORMAT_BOLD_DIS); }
-	inline unsigned long SetTxtUnderlineEn(bool enabled) { return OutputVTSequence(enabled ? CNSL_TFORMAT_ULINE_EN : CNSL_TFORMAT_ULINE_DIS); }
-	inline unsigned long SetTxtNegativeEn(bool enabled) { return OutputVTSequence(enabled ? CNSL_TFORMAT_NEGATIVE_EN : CNSL_TFORMAT_NEGATIVE_DIS); }
-
-	inline unsigned long ClearTxtFormat() { return OutputVTSequence(CNSL_TFORMAT_DEFAULT); }
-
-	inline unsigned long DeleteTxtVisible() { return OutputVTSequence(CNSL_CLEAR_DISPLAY); }				
-	inline unsigned long DeleteTxtScrollback() { return OutputVTSequence(CNSL_CLEAR_SCROLLB); }						
-	inline unsigned long DeleteTxtAll() { return OutputVTSequence(CNSL_CLEAR_ALL); }
-}
+	static unsigned long SetTxtNegativeEn(bool enabled) { return OutputVTSequence(enabled ? CNSL_TFORMAT_NEGATIVE_EN : CNSL_TFORMAT_NEGATIVE_DIS); }
+	
+	static unsigned long ClearTxtFormat() { return OutputVTSequence(CNSL_TFORMAT_DEFAULT); }
+	
+	static unsigned long DeleteTxtVisible() { return OutputVTSequence(CNSL_CLEAR_DISPLAY); }
+	static unsigned long DeleteTxtScrollback() { return OutputVTSequence(CNSL_CLEAR_SCROLLB); }
+	static unsigned long DeleteTxtAll() { return OutputVTSequence(CNSL_CLEAR_ALL); }
+};
 
