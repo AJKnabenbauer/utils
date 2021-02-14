@@ -1,51 +1,11 @@
-#include <stdint.h>
-
 #pragma once
 
-/*
-This header file provides simple macros and functions for general bitwise and bit flag 
-style manipulation.
+#include <stdint.h>
 
-Define the following BM_NO_CACHE_ flags to compute byte strings and reversal instead
-of using an array of look up values. If an array of values is used, it is a static const array
-so that memory from the data segment is used, and not the stack.
-
-#define				|	bytes
-------------------------------
-BM_NO_CACHE_REVERSE	|	256
-BM_NO_CACHE_CHAR	|	2304
-BM_NO_CACHE_WCHAR	|	4608
-BM_NO_CACHE_STRING	|	6912
-BM_NO_CACHE_ALL		|	7168
-*/
-
-#ifdef BM_NO_CACHE_ALL
-#ifndef BM_NO_CACHE_REVERSE
-#define BM_NO_CACHE_REVERSE
-#endif
-#ifndef BM_NO_CACHE_CHAR
-#define BM_NO_CACHE_CHAR
-#endif
-#ifndef BM_NO_CACHE_WCHAR
-#define BM_NO_CACHE_WCHAR
-#endif
-#elif  defined(BM_NO_CACHE_STRING)
-#ifndef BM_NO_CACHE_CHAR
-#define BM_NO_CACHE_CHAR
-#endif
-#ifndef BM_NO_CACHE_WCHAR
-#define BM_NO_CACHE_WCHAR
-#endif
-#endif // BM_NO_CACHE_STRING
-
-/*Create a bit mask for a given bit position*/
+/* Create a bit mask for a given bit position*/
 #define BIT_MASK(a)		(1ULL<<(a))
 
-/*
-* Create a bit mask for a given bit range, 
-* a - msb bit position 
-* b - lsb bit position
-*/
+/* Create a bit mask for a given bit range. a= msb bit position, b = lsb bit position */
 #define BIT_RANGE(a,b)	(((~0ULL)<<((a)+1)) ^ ((~0ULL)<<(b)))
 
 /* a=target variable, b=bit number to act upon 0-n */
@@ -71,20 +31,43 @@ BM_NO_CACHE_ALL		|	7168
 #define BIT_MASK_CHECK_ALL(x,y)	(!(~(x) & (y)))
 #define BIT_MASK_CHECK_ANY(x,y)	((x) & (y))
 
-
 #define BYTE_MASK(pos)							(0xFFULL<<(pos*8))
 #define BYTE_GET(d,n)							(((d)>>(n)) & BYTE_MASK(0))
 #define BYTE_CONCAT2(b1,b0)						(((b1)<<8) | (b0))
 #define BYTE_CONCAT4(b3,b2,b1,b0)				(((b3)<<24) | ((b2)<<16) | ((b1)<<8) | (b0))
 #define BYTE_CONCAT8(b7,b6,b5,b4,b3,b2,b1,b0)	(((b7)<<56) | ((b6)<<48) | ((b5)<<40) | ((b4)<<32) | ((b3)<<24) | ((b2)<<16) | ((b1)<<8) | (b0))
 
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+	 
+	/* 
+	Returns a byte whose individual bits have had their positions reversed
+	Define BM_NO_CACHE_REVERSE to prevent a 256 byte look up table from being used
+	*/
+	uint8_t bitReverse(uint8_t d); 
 
-	const char* bitString(uint8_t d);
+	/* 
+	Returns a char* to a c string containing the binary representation of d
+	Define BM_NO_CACHE_CHAR to prevent a 2304 byte look up table from being used
+	Note: Macro "bitString(d)" is defined to choose the ASCII or UNICODE version of this function automatically
+	*/
+	const char* bitStringA(uint8_t d); 
+
+	/* 
+	Returns a wide char* to a c string containing the binary representation of d
+	Define BM_NO_CACHE_WCHAR to prevent a 4608 byte look up table from being used
+	Note: Macro "bitString(d)" is defined to choose the ASCII or UNICODE version of this function automatically 
+	*/
 	const wchar_t* bitStringW(uint8_t d);
-	uint8_t bitReverse(uint8_t d);
+
+	#ifdef UNICODE
+	#define bitString(d) bitStringW(d) /* Returns a pointer to a c string containing the binary representation of d */
+	#else
+	#define bitString(d) bitStringA(d) /* Returns a pointer to a c string containing the binary representation of d */
+	#endif
 
 #ifdef __cplusplus
 }
