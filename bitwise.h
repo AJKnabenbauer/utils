@@ -37,8 +37,6 @@
 #define BYTE_CONCAT4(b3,b2,b1,b0)				(((b3)<<24) | ((b2)<<16) | ((b1)<<8) | (b0))
 #define BYTE_CONCAT8(b7,b6,b5,b4,b3,b2,b1,b0)	(((b7)<<56) | ((b6)<<48) | ((b5)<<40) | ((b4)<<32) | ((b3)<<24) | ((b2)<<16) | ((b1)<<8) | (b0))
 
-
-
 #ifdef __cplusplus
 extern "C" {
 #endif
