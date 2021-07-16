@@ -8,61 +8,113 @@
 extern "C" {
 #endif
 
-#define AKCNSL_FCOLOR_BLACK	   "\x1b[30m"
-#define AKCNSL_FCOLOR_RED	   "\x1b[31m"
-#define AKCNSL_FCOLOR_GREEN	   "\x1b[32m"
-#define AKCNSL_FCOLOR_YELLOW	   "\x1b[33m"
-#define AKCNSL_FCOLOR_BLUE	   "\x1b[34m"
-#define AKCNSL_FCOLOR_MAGENTA   "\x1b[35m"
-#define AKCNSL_FCOLOR_CYAN	   "\x1b[36m"
-#define AKCNSL_FCOLOR_WHITE	   "\x1b[37m"
-#define AKCNSL_FCOLOR_EXTENDED  "\x1b[38m"
-#define AKCNSL_FCOLOR_DEFAULT   "\x1b[39m"
-#define AKCNSL_FCOLOR_BLACK_B   "\x1b[90m"
-#define AKCNSL_FCOLOR_RED_B	   "\x1b[91m"
-#define AKCNSL_FCOLOR_GREEN_B   "\x1b[92m"
-#define AKCNSL_FCOLOR_YELLOW_B  "\x1b[93m"
-#define AKCNSL_FCOLOR_BLUE_B	   "\x1b[94m"
-#define AKCNSL_FCOLOR_MAGENTA_B "\x1b[95m"
-#define AKCNSL_FCOLOR_CYAN_B	   "\x1b[96m"
-#define AKCNSL_FCOLOR_WHITE_B   "\x1b[97m"
-#define AKCNSL_BCOLOR_BLACK	   "\x1b[40m"
-#define AKCNSL_BCOLOR_RED	   "\x1b[41m"
-#define AKCNSL_BCOLOR_GREEN	   "\x1b[42m"
-#define AKCNSL_BCOLOR_YELLOW	   "\x1b[43m"
-#define AKCNSL_BCOLOR_BLUE	   "\x1b[44m"
-#define AKCNSL_BCOLOR_MAGENTA   "\x1b[45m"
-#define AKCNSL_BCOLOR_CYAN	   "\x1b[46m"
-#define AKCNSL_BCOLOR_WHITE	   "\x1b[47m"
-#define AKCNSL_BCOLOR_EXTENDED  "\x1b[48m"
-#define AKCNSL_BCOLOR_DEFAULT   "\x1b[49m"
-#define AKCNSL_BCOLOR_BLACK_B   "\x1b[100m"
-#define AKCNSL_BCOLOR_RED_B	   "\x1b[101m"
-#define AKCNSL_BCOLOR_GREEN_B   "\x1b[102m"
-#define AKCNSL_BCOLOR_YELLOW_B  "\x1b[103m"
-#define AKCNSL_BCOLOR_BLUE_B	   "\x1b[104m"
-#define AKCNSL_BCOLOR_MAGENTA_B "\x1b[105m"
-#define AKCNSL_BCOLOR_CYAN_B	   "\x1b[106m"
-#define AKCNSL_BCOLOR_WHITE_B   "\x1b[107m"
+#define CNSL_FCLR_BLACK				"\x1b[30m"
+#define CNSL_FCLR_RED				"\x1b[31m"
+#define CNSL_FCLR_GREEN				"\x1b[32m"
+#define CNSL_FCLR_YELLOW			"\x1b[33m"
+#define CNSL_FCLR_BLUE				"\x1b[34m"
+#define CNSL_FCLR_MAGENTA			"\x1b[35m"
+#define CNSL_FCLR_CYAN				"\x1b[36m"
+#define CNSL_FCLR_WHITE				"\x1b[37m"
+#define CNSL_FCLR_EXTENDED			"\x1b[38m"
+#define CNSL_FCLR_DEFAULT			"\x1b[39m"
+#define CNSL_FCLR_BRIGHT_BLACK		"\x1b[90m"
+#define CNSL_FCLR_BRIGHT_RED		"\x1b[91m"
+#define CNSL_FCLR_BRIGHT_GREEN		"\x1b[92m"
+#define CNSL_FCLR_BRIGHT_YELLOW		"\x1b[93m"
+#define CNSL_FCLR_BRIGHT_BLUE		"\x1b[94m"
+#define CNSL_FCLR_BRIGHT_MAGENTA	"\x1b[95m"
+#define CNSL_FCLR_BRIGHT_CYAN		"\x1b[96m"
+#define CNSL_FCLR_BRIGHT_WHITE		"\x1b[97m"
 
-#define AKCNSL_TFORMAT_DEFAULT	  "\x1b[0m"
-#define AKCNSL_TFORMAT_BOLD_EN	  "\x1b[1m"
-#define AKCNSL_TFORMAT_BOLD_DIS	  "\x1b[22m"
-#define AKCNSL_TFORMAT_ULINE_EN	  "\x1b[4m"
-#define AKCNSL_TFORMAT_ULINE_DIS	  "\x1b[24m"
-#define AKCNSL_TFORMAT_NEGATIVE_EN  "\x1b[7m"
-#define AKCNSL_TFORMAT_NEGATIVE_DIS "\x1b[27m"
+#define CNSL_BCLR_BLACK				"\x1b[40m"
+#define CNSL_BCLR_RED				"\x1b[41m"
+#define CNSL_BCLR_GREEN				"\x1b[42m"
+#define CNSL_BCLR_YELLOW			"\x1b[43m"
+#define CNSL_BCLR_BLUE				"\x1b[44m"
+#define CNSL_BCLR_MAGENTA			"\x1b[45m"
+#define CNSL_BCLR_CYAN				"\x1b[46m"
+#define CNSL_BCLR_WHITE				"\x1b[47m"
+#define CNSL_BCLR_EXTENDED			"\x1b[48m"
+#define CNSL_BCLR_DEFAULT			"\x1b[49m"
+#define CNSL_BCLR_BRIGHT_BLACK		"\x1b[100m"
+#define CNSL_BCLR_BRIGHT_RED		"\x1b[101m"
+#define CNSL_BCLR_BRIGHT_GREEN		"\x1b[102m"
+#define CNSL_BCLR_BRIGHT_YELLOW		"\x1b[103m"
+#define CNSL_BCLR_BRIGHT_BLUE		"\x1b[104m"
+#define CNSL_BCLR_BRIGHT_MAGENTA	"\x1b[105m"
+#define CNSL_BCLR_BRIGHT_CYAN		"\x1b[106m"
+#define CNSL_BCLR_BRIGHT_WHITE		"\x1b[107m"
 
-#define AKCNSL_CLEAR_DISPLAY		  "\x1b[2J"
-#define AKCNSL_CLEAR_SCROLLB		  "\x1b[3J"
-#define AKCNSL_CLEAR_ALL			  "\x1B[2J\x1B[3J"
+#define CNSL_TFORMAT_DEFAULT		"\x1b[0m"
+#define CNSL_TFORMAT_BOLD_EN		"\x1b[1m"
+#define CNSL_TFORMAT_BOLD_DIS		"\x1b[22m"
+#define CNSL_TFORMAT_ULINE_EN		"\x1b[4m"
+#define CNSL_TFORMAT_ULINE_DIS		"\x1b[24m"
+#define CNSL_TFORMAT_NEGATIVE_EN	"\x1b[7m"
+#define CNSL_TFORMAT_NEGATIVE_DIS	"\x1b[27m"
+
+#define CNSL_CLEAR_DISPLAY			"\x1b[2J"
+#define CNSL_CLEAR_SCROLLB			"\x1b[3J"
+#define CNSL_CLEAR_ALL				"\x1B[2J\x1B[3J"
+
+#define CNSL_FCLR_BLACK_W			L"\x1b[30m"
+#define CNSL_FCLR_RED_W				L"\x1b[31m"
+#define CNSL_FCLR_GREEN_W			L"\x1b[32m"
+#define CNSL_FCLR_YELLOW_W			L"\x1b[33m"
+#define CNSL_FCLR_BLUE_W			L"\x1b[34m"
+#define CNSL_FCLR_MAGENTA_W			L"\x1b[35m"
+#define CNSL_FCLR_CYAN_W			L"\x1b[36m"
+#define CNSL_FCLR_WHITE_W			L"\x1b[37m"
+#define CNSL_FCLR_EXTENDED_W		L"\x1b[38m"
+#define CNSL_FCLR_DEFAULT_W			L"\x1b[39m"
+#define CNSL_FCLR_BRIGHT_BLACK_W	L"\x1b[90m"
+#define CNSL_FCLR_BRIGHT_RED_W		L"\x1b[91m"
+#define CNSL_FCLR_BRIGHT_GREEN_W	L"\x1b[92m"
+#define CNSL_FCLR_BRIGHT_YELLOW_W	L"\x1b[93m"
+#define CNSL_FCLR_BRIGHT_BLUE_W		L"\x1b[94m"
+#define CNSL_FCLR_BRIGHT_MAGENTA_W	L"\x1b[95m"
+#define CNSL_FCLR_BRIGHT_CYAN_W		L"\x1b[96m"
+#define CNSL_FCLR_BRIGHT_WHITE_W	L"\x1b[97m"
+
+#define CNSL_BCLR_BLACK_W			L"\x1b[40m"
+#define CNSL_BCLR_RED_W				L"\x1b[41m"
+#define CNSL_BCLR_GREEN_W			L"\x1b[42m"
+#define CNSL_BCLR_YELLOW_W			L"\x1b[43m"
+#define CNSL_BCLR_BLUE_W			L"\x1b[44m"
+#define CNSL_BCLR_MAGENTA_W			L"\x1b[45m"
+#define CNSL_BCLR_CYAN_W			L"\x1b[46m"
+#define CNSL_BCLR_WHITE_W			L"\x1b[47m"
+#define CNSL_BCLR_EXTENDED_W		L"\x1b[48m"
+#define CNSL_BCLR_DEFAULT_W			L"\x1b[49m"
+#define CNSL_BCLR_BRIGHT_BLACK_W	L"\x1b[100m"
+#define CNSL_BCLR_BRIGHT_RED_W		L"\x1b[101m"
+#define CNSL_BCLR_BRIGHT_GREEN_W	L"\x1b[102m"
+#define CNSL_BCLR_BRIGHT_YELLOW_W	L"\x1b[103m"
+#define CNSL_BCLR_BRIGHT_BLUE_W		L"\x1b[104m"
+#define CNSL_BCLR_BRIGHT_MAGENTA_W	L"\x1b[105m"
+#define CNSL_BCLR_BRIGHT_CYAN_W		L"\x1b[106m"
+#define CNSL_BCLR_BRIGHT_WHITE_W	L"\x1b[107m"
+
+#define CNSL_TFORMAT_DEFAULT_W		L"\x1b[0m"
+#define CNSL_TFORMAT_BOLD_EN_W		L"\x1b[1m"
+#define CNSL_TFORMAT_BOLD_DIS_W		L"\x1b[22m"
+#define CNSL_TFORMAT_ULINE_EN_W		L"\x1b[4m"
+#define CNSL_TFORMAT_ULINE_DIS_W	L"\x1b[24m"
+#define CNSL_TFORMAT_NEGATIVE_EN_W	L"\x1b[7m"
+#define CNSL_TFORMAT_NEGATIVE_DIS_W	L"\x1b[27m"
+
+#define CNSL_CLEAR_DISPLAY_W		L"\x1b[2J"
+#define CNSL_CLEAR_SCROLLB_W		L"\x1b[3J"
+#define CNSL_CLEAR_ALL_W			L"\x1B[2J\x1B[3J"
+
 
 
 	/**
 	 * Allocate a new console for the current thread
 	 *
 	 * @param  redirectIO True to redirect STDIN, STDOUT, and STDERR to the allocated console
-	 * @param  enableVTP  True to enable, false to disable virtual terminal processing of 
+	 * @param  enableVTP  True to enable, false to disable virtual terminal processing of
 	 * 					  terminal control sequences
 	 *
 	 * @returns True if it succeeds, false if it fails.
@@ -73,7 +125,7 @@ extern "C" {
 	/**
 	 * Frees the console attached to the calling thread
 	 *
-	 * @returns True if it succeeds, false if it fails. Note that True is returned if no console is attached 
+	 * @returns True if it succeeds, false if it fails. Note that True is returned if no console is attached
 	 * 			to the calling thread.
 	 */
 	bool akConsole_free( void );
@@ -81,7 +133,7 @@ extern "C" {
 
 	/**
 	 * Closes a file and reassign the stream to the output file of the console attached
-	 * to the calling thread. 
+	 * to the calling thread.
 	 *
 	 * @param  pFile  The file stream to reopen.
 	 *
@@ -92,7 +144,7 @@ extern "C" {
 
 	/**
 	 * Closes a file and reassign the stream to the input file of the console attached
-	 * to the calling thread. 
+	 * to the calling thread.
 	 *
 	 * @param  pFile  The file stream to reopen.
 	 *
@@ -122,6 +174,8 @@ extern "C" {
 	 * @returns True if it succeeds, false if it fails.
 	 */
 	bool akConsole_set_enable_VTP( bool enabled );
+
+
 
 	//class Console
 	//{
