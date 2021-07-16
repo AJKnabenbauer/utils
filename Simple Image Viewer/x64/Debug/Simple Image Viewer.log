@@ -1,0 +1,4 @@
+﻿  windowlearningmain.cpp
+C:\Users\Andrew\source\repos\Simple Image Viewer\Simple Image Viewer\windowlearningmain.cpp(47,7): warning C4101: 'buf': unreferenced local variable
+C:\Users\Andrew\source\repos\Simple Image Viewer\Simple Image Viewer\windowlearningmain.cpp(439,13): warning C4244: 'initializing': conversion from 'WPARAM' to 'char', possible loss of data
+  Simple Image Viewer.vcxproj -> C:\Users\Andrew\source\repos\Simple Image Viewer\x64\Debug\Simple Image Viewer.exe

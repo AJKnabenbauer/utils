@@ -1,0 +1,8 @@
+﻿  WIC_ImageViewer.cpp
+  windowlearningmain.cpp
+  Generating Code...
+WIC_ImageViewer.obj : error LNK2019: unresolved external symbol _D2D1CreateFactory@16 referenced in function "long __cdecl D2D1CreateFactory(enum D2D1_FACTORY_TYPE,struct _GUID const &,void * *)" (?D2D1CreateFactory@@YAJW4D2D1_FACTORY_TYPE@@ABU_GUID@@PAPAX@Z)
+    Hint on symbols that are defined and could potentially match:
+      "long __cdecl D2D1CreateFactory(enum D2D1_FACTORY_TYPE,struct _GUID const &,void * *)" (?D2D1CreateFactory@@YAJW4D2D1_FACTORY_TYPE@@ABU_GUID@@PAPAX@Z)
+MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol _main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+C:\Users\Andrew\source\repos\Simple Image Viewer\Debug\Simple Image Viewer.exe : fatal error LNK1120: 2 unresolved externals
