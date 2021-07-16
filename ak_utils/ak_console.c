@@ -1,55 +1,65 @@
 #include "ak_console.h"
 
+#include <windows.h>
 
-BOOL akCnsl_allocate( void )
+bool akConsole_allocate( bool redirectIO, bool enableVTP )
 {
-	return AllocConsole() ? TRUE : FALSE;
+	if ( !AllocConsole() )
+		return false;
+
+	if ( redirectIO )
+		if ( akConsole_redirect_stdIO(true, true, true) != 0 ) return false;
+		
+	if ( !akConsole_set_enable_VTP( enableVTP ) )
+		return false;
+
+	return true;
 }
 
-BOOL akCnsl_free( void )
+bool akConsole_free( void )
 {
 	if ( FreeConsole() ) 
-		return TRUE;
+		return true;
 
-	// Return TRUE if no console was attached to the calling thread	
-	return GetLastError() == ERROR_INVALID_PARAMETER ? TRUE : FALSE;
+	// Return true if no console was attached to the calling thread	
+	return GetLastError() == ERROR_INVALID_PARAMETER ? true : false;
 
 }
 
-errno_t akCnsl_freopen_as_output( FILE* pFile )
+errno_t akConsole_freopen_as_output( FILE* pFile )
 {
 	FILE* pDF = NULL;
 	return freopen_s( &pDF, "CONOUT$", "w", pFile );
 }
 
-errno_t akCnsl_freopen_as_input( FILE* pFile )
+errno_t akConsole_freopen_as_input( FILE* pFile )
 {
 	FILE* pDF = NULL;
 	return freopen_s( &pDF, "CONIN$", "r", pFile );
 }
 
-errno_t akCnsl_redirect_stdIO( BOOL stdIn, BOOL stdOut, BOOL stdErr )
+errno_t akConsole_redirect_stdIO( bool stdIn, bool stdOut, bool stdErr )
 {
 	errno_t err = 0;
 	if ( !err && stdIn )
-		err = akCnsl_freopen_as_input( stdin );
+		err = akConsole_freopen_as_input( stdin );
 	if ( !err && stdOut )
-		err = akCnsl_freopen_as_output( stdout );
+		err = akConsole_freopen_as_output( stdout );
 	if ( !err && stdErr )
-		err = akCnsl_freopen_as_output( stderr );
+		err = akConsole_freopen_as_output( stderr );
 	return err;
 }
 
-BOOL akCnsl_enable_VTP( BOOL enabled )
+bool akConsole_set_enable_VTP( bool enabled )
 {
 	DWORD dwMode = 0;
 	HANDLE hStdout = GetStdHandle( STD_OUTPUT_HANDLE );
 
 	if ( hStdout == INVALID_HANDLE_VALUE )
-		return FALSE;
+		return false;
 
 	if ( !GetConsoleMode( hStdout, &dwMode ) )
-		return FALSE;
+		return false;
 
 	return enabled ?
 		SetConsoleMode( hStdout, ( dwMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING ) ) :
